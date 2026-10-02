@@ -8,6 +8,7 @@ By Psicopompo · Patch for the USA ROM · IPS and BPS
 
 ---
 
+
 <img width="256" height="224" alt="Super Mario Kart (USA) (patched)-261002-222409" src="https://github.com/user-attachments/assets/e7da9dbb-28f2-425a-bfb0-714e8307a836" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-222732" src="https://github.com/user-attachments/assets/f5519df5-4ac0-479e-bf02-50e9db8743f5" />
 
 
@@ -19,6 +20,7 @@ Super Mario Kart is a gorgeous game that has always played single-player with on
 The obvious first step is to switch off the HDMA windowing that carves the picture in two, so the Mode 7 floor takes the whole 256×224 image. But that is only the first step. The picture is bigger and everything else is where it was: the camera still points at the old spot, the kart is still drawn for the old layout, and every piece of HUD, every banner and every effect still believes the screen is cropped.
 
 **This is not just "removing the map".** This patch moves the camera and then deals with the consequences.
+
 
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003333" src="https://github.com/user-attachments/assets/631fc658-0991-45ac-8723-63d9ac101e27" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003554" src="https://github.com/user-attachments/assets/46090e30-12c6-43ff-b6fa-80ef56e649be" />
 
@@ -37,13 +39,15 @@ The Mode 7 floor is projected by the console's DSP-1 coprocessor from a focus po
 * **Side effects found along the way and fixed:** credits flicker, retry text position in 2P, Time Trial / 2P artifacts, a ball appearing behind Mario at the Time Trial start, and Lakitu's shadow during the rescue (it stayed up in the air, far from where Mario falls).
 * **Title screen.** A discreet, white `Fullscreen Edition · Psicopompo` line under Nintendo's copyright. The copyright line itself was 2 px off-center in the original and has been nudged 2 px to the right.
 
+
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-235523" src="https://github.com/user-attachments/assets/bf975651-62c8-4ca9-b89d-275134a13105" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-225311" src="https://github.com/user-attachments/assets/ccef2f32-302b-4048-bc9e-7a9cb7ac8702" />
 
 ## Map and rear-view mirror: gone, on purpose
 
 The first plan was to keep both as a small inset over the full view. They are secondary Mode 7 renders, so keeping them meant splitting the frame again in mid-picture. That defeats the point (a clean full-screen image) and kept producing artifacts elsewhere. Every workaround broke something else. A clean screen beat a cluttered one.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003628" src="https://github.com/user-attachments/assets/3c5f4f1a-1f72-4f38-85d1-d4f236b2507d" />
+
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003628" src="https://github.com/user-attachments/assets/3c5f4f1a-1f72-4f38-85d1-d4f236b2507d" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-013030" src="https://github.com/user-attachments/assets/513fa905-178b-40e1-984c-91c2062df0cf" />
 
 ## How it was built: fixes that broke other things
 
@@ -52,6 +56,7 @@ Almost every fix opened a new problem. Raise one banner and it collides with ano
 Performance mattered too. A first approach to hiding sprites that fell outside the picture cost enough CPU time to slow heavy scenes down. It was reworked so the patch adds no measurable load.
 
 This project was developed in collaboration with an AI assistant. The AI did the technical work (reading and understanding the game code, writing and verifying the patches); Psicopompo directed it, decided what to do and how, tested every build and reported the problems with save states.
+
 
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
 
