@@ -20,7 +20,8 @@ The obvious first step is to switch off the HDMA windowing that carves the pictu
 
 **This is not just "removing the map".** This patch moves the camera and then deals with the consequences.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003333" src="https://github.com/user-attachments/assets/631fc658-0991-45ac-8723-63d9ac101e27" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003554" src="https://github.com/user-attachments/assets/46090e30-12c6-43ff-b6fa-80ef56e649be" />
+
 
 ## The idea, in one paragraph
 
@@ -42,6 +43,8 @@ The Mode 7 floor is projected by the console's DSP-1 coprocessor from a focus po
 
 The first plan was to keep both as a small inset over the full view. They are secondary Mode 7 renders, so keeping them meant splitting the frame again in mid-picture. That defeats the point (a clean full-screen image) and kept producing artifacts elsewhere. Every workaround broke something else. A clean screen beat a cluttered one.
 
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003628" src="https://github.com/user-attachments/assets/3c5f4f1a-1f72-4f38-85d1-d4f236b2507d" />
+
 ## How it was built: fixes that broke other things
 
 Almost every fix opened a new problem. Raise one banner and it collides with another. Move a counter and an effect still draws where the counter used to be. Adjust a table and the 2P version falls apart. The work was therefore regression-driven: dozens of save states (start line, cups, Ranked Out, Game Over, ROUND 1, Time Trial, 2P retry, credits, and more) are replayed against every change and compared frame by frame with the previous build. Nothing was patched on a hunch: each change was checked against code traces and frame captures first.
@@ -49,6 +52,8 @@ Almost every fix opened a new problem. Raise one banner and it collides with ano
 Performance mattered too. A first approach to hiding sprites that fell outside the picture cost enough CPU time to slow heavy scenes down. It was reworked so the patch adds no measurable load.
 
 This project was developed in collaboration with an AI assistant. The AI did the technical work (reading and understanding the game code, writing and verifying the patches); Psicopompo directed it, decided what to do and how, tested every build and reported the problems with save states.
+
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
 
 ## Applying the patch
 
