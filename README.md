@@ -2,7 +2,7 @@
 
 # Super Mario Kart – Fullscreen Edition (USA)
 
-**A true full-screen view for single-player Super Mario Kart: the camera moves closer to the kart, and everything that depended on the old layout is rebuilt around the extra room.**
+**A true full-screen view for single-player Super Mario Kart: the camera reference is changed so the projected scenery moves closer to the kart, while everything that depended on the old layout is rebuilt around the extra room.**
 
 By **Psicopompo** · USA ROM · IPS and BPS
 
@@ -20,7 +20,7 @@ But that is only the beginning.
 
 The camera still points at the old position, the kart is still drawn for the old layout, and the shadow, rivals, collisions, objects, HUD and screen effects all continue to assume that the lower part of the picture is something else.
 
-**This is not just "removing the map".** The camera itself is moved, and everything that depends on it has to follow.
+**This is not just "removing the map".** The camera reference itself is changed, and everything that depends on it has to follow.
 
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003333" src="https://github.com/user-attachments/assets/631fc658-0991-45ac-8723-63d9ac101e27" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003554" src="https://github.com/user-attachments/assets/46090e30-12c6-43ff-b6fa-80ef56e649be" />
 
@@ -40,24 +40,28 @@ The Mode 7 floor is projected by the SNES's DSP-1 from a focus point associated 
 
 Simply drawing Mario lower on the screen does not work. The sprite may move, but the road, shadow, rivals and collision calculations still belong to the old projection. The result is a kart that appears to float away from the ground.
 
-Instead, the patch moves the DSP-1's effective focus point forward along the direction of the camera. The kart therefore ends up lower on screen while the road and everything projected from it remain coherent.
+The solution was to change the camera reference itself. **The kart stays in its new screen position while the projected scenery is brought closer to it**, similar to the visual effect produced when accelerating in the original game.
 
-The camera also moves gradually into its new position when the race starts instead of jumping instantly.
+This became especially important at the starting grid. After expanding the Mode 7 area to fill all 224 lines, the grid ended up too far ahead of Mario: the kart was in the desired position, but the rivals and the painted grid mark were left behind in the old projection. Moving the kart again was not the answer. The scenery itself had to be brought back into the correct relationship with the kart.
 
-**Same perspective. Same rotation. A different, much more useful part of the screen.**
+The DSP-1's effective focus point is therefore moved forward along the direction of the view, and the camera transitions gradually into its new position when the race starts rather than switching instantly.
+
+**The kart stays where it belongs; the world is brought toward it.**
+
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-235523" src="https://github.com/user-attachments/assets/bf975651-62c8-4ca9-b89d-275134a13105" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-225311" src="https://github.com/user-attachments/assets/ccef2f32-302b-4048-bc9e-7a9cb7ac8702" />
 
 ## What changes
 
 * **True fullscreen in 1P.** The race view uses the complete 256×224 display.
-* **Closer camera.** The kart, road, rivals, objects, shadows and collision logic remain consistent with the new perspective.
+* **New camera reference.** The kart, road, rivals, objects, shadows and collision logic remain consistent with the new projection.
 * **HUD relocation.** The extra space allows the position digits, car counter and coin counter to be rearranged without the original layout constraints. The small position digit is moved about 8 pixels left, while the large finishing-position digit is moved into the new space.
 * **Centered tables and banners.** The LAP TIME table and standings faces are moved 20 pixels down. Game Over, ROUND 1, Ranked Out and the RETRY / END menus are also repositioned.
-* **Position-dependent effects fixed.** Bananas, crush smoke, Monty Moles, lost coins and other effects that were tied to the old kart position are moved with the new camera layout.
+* **Position-dependent effects fixed.** Bananas, crush smoke, Monty Moles, lost coins and other effects that were tied to the old kart position are moved to match the new camera layout.
 * **2P preserved.** The fullscreen logic is restricted to 1P. The 2-player branch keeps the original game logic through dedicated gates, while side effects that leaked into 2P were fixed individually.
 * **Secondary graphical issues fixed.** Credits flicker, retry text in 2P, Time Trial artifacts, a stray ball behind Mario at the start of Time Trial, Lakitu's shadow during the rescue sequence, bottom-edge sprites, coin/life counter flicker, and several other problems were tracked down and corrected.
 * **Title screen.** A discreet white `Fullscreen Edition · Psicopompo` line was added below Nintendo's copyright. The original copyright line was also nudged 2 pixels to the right to center it.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-235523" src="https://github.com/user-attachments/assets/bf975651-62c8-4ca9-b89d-275134a13105" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-225311" src="https://github.com/user-attachments/assets/ccef2f32-302b-4048-bc9e-7a9cb7ac8702" />
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
 
 ## Map and rear-view mirror: gone, on purpose
 
@@ -122,7 +126,7 @@ Apply the patch to a copy of your clean ROM.
 * Tested in **bsnes** and **RetroArch**.
 * **Real hardware and flash cartridges are untested.**
 * The **50cc and 100cc cups** have been played through with the final build. 150cc, Mirror Mode and other modes have received less testing.
-* Track objects such as pipes still follow the original game's section-based loading rules. With the camera closer, some of those appearance/disappearance boundaries are simply more noticeable.
+* Track objects such as pipes still follow the original game's section-based loading rules. With the new camera reference, some of those appearance/disappearance boundaries are simply more noticeable.
 * The 2-player mode retains its original split-screen behavior and does not use the fullscreen 1-player camera.
 * Bug reports are welcome, ideally with a save state that reproduces the problem.
 
