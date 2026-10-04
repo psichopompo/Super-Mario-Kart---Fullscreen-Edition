@@ -60,9 +60,9 @@ Version 1.2 refined this relationship. The point of the track that the game trea
 * **HUD relocation.** The extra space allows the position digits, car counter and coin counter to be rearranged without the original layout constraints. The small position digit is moved about 8 pixels left, while the large finishing-position digit is moved into the new space.
 * **Centered tables and banners.** The LAP TIME table and standings faces are moved 25 pixels down. Game Over, ROUND 1, Ranked Out and the RETRY / END menus are also repositioned.
 * **Position-dependent effects fixed.** Bananas, crush smoke, Monty Moles, lost coins and other effects that were tied to the old kart position are moved to match the new camera layout.
-* **Lakitu's rescue works in fullscreen.** After falling off the track, Lakitu comes into view, picks up the kart with the coin and lifts it back onto the track, as in the original game.
-* **Performance tuned.** The check that decides whether the fullscreen logic applies is computed once per frame instead of dozens of times. In the heaviest scene tested (Lakitu's rescue), lagged frames dropped from 18% to practically zero compared with the build before this optimization.
-* **2P preserved.** The fullscreen logic is restricted to 1P. The 2-player branch keeps the original game logic through dedicated gates, while side effects that leaked into 2P were fixed individually.
+* **Lakitu's rescue works in fullscreen.** After falling off the track, Lakitu comes into view, picks up the kart with the coin and lifts it back onto the track, as in the original game. As of v1.3, no part of Lakitu (his head, his cloud, or the leftover "three hairs") peeks out at the bottom of the screen during a rescue or after his appearance at the start.
+* **Performance tuned.** The check that decides whether the fullscreen logic applies is computed once per frame instead of dozens of times. In the heaviest scene tested (Lakitu's rescue), lagged frames dropped from 18% to practically zero compared with the build before this optimization. v1.3 trims the load further: in the heaviest race start tested, the peak CPU load dropped from 95.7% to 90.5% (vanilla: 89%), and no lagged frames were measured in the first 1,061 frames of the Mushroom, Flower and Star Cup starts (50cc).
+* **2P preserved.** The fullscreen logic is restricted to 1P. The 2-player branch keeps the original game logic through dedicated gates, while side effects that leaked into 2P were fixed individually. As of v1.3, this includes the height of Lakitu's coin and of lost coins in 2P, which could be drawn too low after playing a 1P race in the same session.
 * **Secondary graphical issues fixed.** Credits flicker, retry text in 2P, Time Trial artifacts, a stray ball behind Mario at the start of Time Trial, Lakitu's shadow during the rescue sequence, bottom-edge sprites, coin/life counter flicker, stray white pixels on real hardware, and several other problems were tracked down and corrected.
 * **Title screen.** A discreet white `Fullscreen Edition · Psicopompo` line was added below Nintendo's copyright. The original copyright line was also nudged 2 pixels to the right to center it.
 
@@ -92,9 +92,11 @@ Rivals could pass through Mario because the collision code still used the old de
 
 Lakitu's rescue was a good example. His script waits for his Y coordinate to reach certain values, chosen for the original screen range. With the larger view his path crosses negative values, so those waits, and the coin that he carries, never completed. The checks had to be adapted without changing his speed or sequence.
 
+Even once the rescue worked, Lakitu kept leaving traces at the bottom of the screen. The rescue starts with a negative Y coordinate, so his head and cloud showed up in the extra lines at the bottom while he came down from above and again when he left upward; in v1.3 they are hidden during those moments. Fixing that exposed one more problem: his three leftover hair pieces stayed drawn at the bottom edge for the rest of the race, because the game does not rewrite those sprite slots once Lakitu is done. Those are now parked off-screen, which also cleans up save states made with earlier versions.
+
 The OAM ordering of the karts also had to be investigated to understand why some rivals overlapped incorrectly. Some experimental fixes worked visually but cost too many CPU cycles, causing slowdown in the NTSC version. Those approaches had to be discarded and replaced with much cheaper hooks.
 
-Profiling the slowdowns showed that one of the hooks was the culprit: the check that decides whether the fullscreen logic applies was being run 40 to 55 times per frame by the sprite-drawing routines. In the heaviest scene tested (Lakitu's rescue), the game logic was taking about as long as the frame itself. The result of that check is now computed once per frame and read directly by the most frequently called routines. Normal driving, race starts with all eight karts and full races on Donut Plains showed no lag.
+Profiling the slowdowns showed that one of the hooks was the culprit: the check that decides whether the fullscreen logic applies was being run 40 to 55 times per frame by the sprite-drawing routines. In the heaviest scene tested (Lakitu's rescue), the game logic was taking about as long as the frame itself. The result of that check is now computed once per frame and read directly by the most frequently called routines. v1.3 goes one step further: the projection and object-culling code reads that cached result too, and the three chained wrappers that decide whether an object is on screen were merged into one routine. Normal driving, race starts with all eight karts and full races on Donut Plains showed no lag.
 
 The work therefore became heavily regression-driven. **Dozens of reproducible save states** covering race starts, cups, collisions, effects, Time Trial, Ranked Out, Game Over, retry screens, credits, 2P and other situations were repeatedly replayed and compared frame by frame after changes.
 
@@ -119,10 +121,10 @@ Input: a clean **Super Mario Kart (USA)** ROM, headerless.
 |          |      Size | CRC32      | MD5                                | SHA-1                                      |
 | -------- | --------: | ---------- | ---------------------------------- | ------------------------------------------ |
 | Original |   524,288 | `CD80DB86` | `7f25ce5a283d902694c52fb1152fa61a` | `47E103D8398CF5B7CBB42B95DF3A3C270691163B` |
-| Patched  | 1,048,576 | `8D91CAC9` | `779a4560f4af920b3dc82f9697d43cb8` | `C908A843A4147D8DDA018FA2C5CA364DD7BABF9C` |
+| Patched  | 1,048,576 | `3CB1596A` | `ec6b1b54f95bba2e913ca527dd3772b8` | `BB0F215BBCD90F19E057BCC9FD6FD378C1B5CB46` |
 
-* `Super Mario Kart - Fullscreen Edition (v1.2) (by Psicopompo).bps` — **recommended**; it verifies the input ROM. Use Flips, beat, MultiPatch or RomPatcher.js.
-* `Super Mario Kart - Fullscreen Edition (v1.2) (by Psicopompo).ips` — use any IPS-compatible patcher.
+* `Super Mario Kart - Fullscreen Edition (v1.3) (by Psicopompo).bps` — **recommended**; it verifies the input ROM. Use Flips, beat, MultiPatch or RomPatcher.js.
+* `Super Mario Kart - Fullscreen Edition (v1.3) (by Psicopompo).ips` — use any IPS-compatible patcher.
 
 The output is expanded to 1 MB. New code and data are stored in the added space, and the ROM size byte is updated.
 
@@ -130,6 +132,7 @@ Apply the patch to a copy of your clean ROM.
 
 ## Version history
 
+* **v1.3** – Lakitu no longer peeks out at the bottom of the screen: his head and cloud are hidden while he comes down from above or leaves upward (Ghost Valley, the water falls), and the leftover pieces (the "three hairs") that stayed behind at the start and after a rescue are cleaned up. In 2P, Lakitu's coin and lost coins are drawn at the right height instead of 88 pixels too low. Lower CPU load in 1P (peak load in the heaviest start tested: 95.7% → 90.5%). Includes all v1.2 fixes.
 * **v1.2** – The ground projection is realigned with the kart's on-screen position, so the track under the kart matches where the kart is drawn: collisions with walls, edges and pits now happen at the right place (they used to trigger too early). Fixed Lakitu's rescue after falling off the track. Reduced slowdowns by computing the fullscreen check once per frame. Includes all v1.1 fixes.
 * **v1.1** – Fixed a few stray white pixels that appeared on real hardware in the transition band of the picture (confirmed on real hardware by a tester; not visible in most emulators). The LAP TIME table and standings faces were moved 5 pixels further down.
 * **v1.0** – First release.
@@ -139,8 +142,8 @@ Apply the patch to a copy of your clean ROM.
 * **USA only.** The PAL version is not supported.
 * **224 lines / 60 Hz NTSC.**
 * Tested in **bsnes** and **RetroArch**.
-* **Real hardware:** the v1.1 white-pixel fix was confirmed on real hardware by a tester. v1.2 has not been tested on real hardware yet, and flash cartridges are untested.
-* The **50cc and 100cc cups** were played through with v1.1; v1.2 has been checked with state-by-state regression, frame-by-frame comparison, performance measurements and play sessions. 150cc, Mirror Mode and other modes have received less testing.
+* **Real hardware:** the v1.1 white-pixel fix was confirmed on real hardware by a tester. v1.2 and v1.3 have not been tested on real hardware yet, and flash cartridges are untested.
+* The **50cc and 100cc cups** were played through with v1.1; v1.3 has been checked with state-by-state regression, frame-by-frame comparison, performance measurements and play sessions. 150cc, Mirror Mode and other modes have received less testing.
 * Track objects such as pipes still follow the original game's section-based loading rules. With the new camera reference, some of those appearance/disappearance boundaries are simply more noticeable.
 * The 2-player mode retains its original split-screen behavior and does not use the fullscreen 1-player camera.
 * Bug reports are welcome, ideally with a save state that reproduces the problem.
