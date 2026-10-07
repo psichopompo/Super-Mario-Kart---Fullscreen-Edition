@@ -119,6 +119,8 @@ The AI handled a large part of the technical implementation: analysing the game'
 
 The distinction matters: the AI did a great deal of the programming work, but the project itself was not produced by asking for a finished hack and accepting the first result. It was an iterative process of investigation, implementation, testing, failure, correction and regression testing.
 
+[![Super Mario Kart in Fullscreen!](https://img.youtube.com/vi/_ERoYD5SQv0/hqdefault.jpg)](https://www.youtube.com/watch?v=_ERoYD5SQv0)
+
 ## Applying the patch
 
 Input: a clean **Super Mario Kart (USA)** ROM, headerless.
