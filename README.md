@@ -126,16 +126,19 @@ Input: a clean **Super Mario Kart (USA)** ROM, headerless.
 |          |      Size | CRC32      | MD5                                | SHA-1                                      |
 | -------- | --------: | ---------- | ---------------------------------- | ------------------------------------------ |
 | Original |   524,288 | `CD80DB86` | `7f25ce5a283d902694c52fb1152fa61a` | `47E103D8398CF5B7CBB42B95DF3A3C270691163B` |
-| Patched  | 1,048,576 | `BC2805E7` | —                                  | —                                          |
+| Patched  | 1,048,576 | `6AF5145E` | —                                  | —                                          |
 
-* `Super Mario Kart - Fullscreen Edition (v1.4) (by Psicopompo).bps` — **recommended**; it verifies the input ROM. Use Flips, beat, MultiPatch or RomPatcher.js.
-* `Super Mario Kart - Fullscreen Edition (v1.4) (by Psicopompo).ips` — use any IPS-compatible patcher.
+* `Super Mario Kart - Fullscreen Edition (v1.5) (by Psicopompo).bps` — **recommended**; it verifies the input ROM. Use Flips, beat, MultiPatch or RomPatcher.js.
+* `Super Mario Kart - Fullscreen Edition (v1.5) (by Psicopompo).ips` — use any IPS-compatible patcher.
 
 The output is expanded to 1 MB. New code and data are stored in the added space, and the ROM size byte is updated.
 
 Apply the patch to a copy of your clean ROM.
 
 ## Version history
+
+Version history
+* **v1.5** – Fixed the Time Trial results screen. Results now correctly show every lap, highlighted times, TOTAL, and the map with BEST 5 / BEST LAP, while racing remains fullscreen and the Grand Prix results layout is preserved. Tested with Time Trial and a normal race. Includes all v1.4 improvements.
 
 * **v1.4** – New geometric distribution of the eleven original rival sizes, selected after comparing the alternatives in motion. The normal player size is unchanged. The lateral starting-grid correction now applies from the beginning of the camera approach while preserving the full zoom and orbit. Corrected Lakitu's shadow in fullscreen and both split-screen views while retaining the previous lower-edge body correction. The changes were checked over 3,360 compared frames, with a separate 360-frame split-screen comparison. Tested in bsnes and RetroArch and approved through visual testing.
 
