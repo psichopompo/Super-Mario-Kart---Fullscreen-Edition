@@ -1,8 +1,8 @@
- <img width="1280" height="400" alt="Super-Mario-Kart-Logo" src="https://github.com/user-attachments/assets/838b9ed3-0d4c-4db8-a1d1-c81326d3d1ab" />
+<img width="1280" height="400" alt="Super-Mario-Kart-Logo" src="https://github.com/user-attachments/assets/838b9ed3-0d4c-4db8-a1d1-c81326d3d1ab" />
 
 # Super Mario Kart – Fullscreen Edition (USA)
 
-**A true full-screen view for single-player Super Mario Kart, with a wide-horizon camera, adapted backgrounds across all 20 tracks, and a complete reworking of the game logic around the expanded view.**
+**A true fullscreen view for Super Mario Kart's 1-player mode, featuring a wide-horizon camera, adapted scenery across all 20 tracks, and a complete reworking of the game's logic around the expanded view.**
 
 By **Psicopompo** · USA ROM · IPS and BPS · Current version: **v2.0**
 
@@ -10,87 +10,91 @@ By **Psicopompo** · USA ROM · IPS and BPS · Current version: **v2.0**
 
 ---
 
-<img width="256" height="224" alt="Super Mario Kart (USA) (patched)-261002-222409" src="https://github.com/user-attachments/assets/e7da9dbb-28f2-425a-bfb0-714e8307a836" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-222732" src="https://github.com/user-attachments/assets/f5519df5-4ac0-479e-bf02-50e9db8743f5" />
+## Why it exists
 
-## Why this exists
+Super Mario Kart is a beautiful game whose 1-player mode has always played with one hand tied behind its back. The race is drawn in a cropped portion of the screen, while the lower area is reserved for a map or rear-view mirror inherited from the 2-player split-screen design.
 
-Super Mario Kart is a gorgeous game that has always played single-player with one hand tied behind its back. The race is drawn in a cropped part of the screen, while the lower area is reserved for a map or rear-view mirror inherited from the split-screen design of 2-player mode.
+The obvious first step is to remove the split-screen crop so Mode 7's ground plane can use the full 256×224 pixels.
 
-The obvious first step is to remove the windowing that splits the picture so the Mode 7 floor can use the full 256×224 display.
+But that's only the beginning.
 
-But that is only the beginning.
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-031613" src="https://github.com/user-attachments/assets/29a52de2-30c4-401c-be1a-4015c5d3c60a" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-030909" src="https://github.com/user-attachments/assets/2534d407-c5a0-4448-8118-df31ec4ef981" />
 
-The camera still points at the old position, the kart is still drawn for the old layout, and the shadow, rivals, collisions, objects, HUD and screen effects all continue to assume that the lower part of the picture is something else.
+The camera still points at the old position, the kart is still drawn for the old layout, and the shadow, opponents, collisions, objects, HUD, and screen effects all still assume that the bottom part of the image is something else.
 
-**This is not just "removing the map".** The camera reference itself is changed, and everything that depends on it has to follow.
+**This isn't just a matter of “removing the map.”** The camera reference itself changes, and everything that depends on it has to follow.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003333" src="https://github.com/user-attachments/assets/631fc658-0991-45ac-8723-63d9ac101e27" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003554" src="https://github.com/user-attachments/assets/46090e30-12c6-43ff-b6fa-80ef56e649be" />
+## The idea that moved the project forward
 
-## The breakthrough
+At first, the project tried to address the consequences one by one: move the kart, fix the shadow, fix the effects, fix the collisions, fix the opponents, fix the objects…
 
-At first, the project tried to solve the consequences one by one: move the kart, fix the shadow, fix the effects, fix the collisions, fix the rivals, fix the objects...
+Each fix seemed to uncover another part of the game that was still using the old coordinates.
 
-Every fix seemed to uncover another part of the game that was still using the old coordinates.
+Then came the idea that changed the project's direction: **Player 2 already had much of the screen-space logic needed to place a kart around the position we wanted for the new 1-player view. Why not reuse that logic for Player 1?**
 
-Then came the idea that changed the direction of the project: **Player 2 already had much of the screen-space logic needed to place a kart around the position wanted for the new 1-player view. Why not reuse that logic for Player 1?**
+That didn't solve everything on its own, but it provided a much better foundation than fighting each side effect separately. It saved a great deal of time and made it possible to focus on the deeper camera and projection problems.
 
-It did not solve everything by itself, but it provided a much better foundation than fighting every side effect independently. That saved a huge amount of time and made it possible to concentrate on the deeper camera and projection problems.
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-040214" src="https://github.com/user-attachments/assets/fb3a2e64-65fb-4b7d-831a-8ecceedea7ad" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-041627" src="https://github.com/user-attachments/assets/1b3b37c2-3698-4f0c-b0d7-8d9ef875a610" />
 
 ## The camera
 
-The Mode 7 floor is projected by the SNES's DSP-1 from a focus point associated with the kart.
+The SNES DSP-1 projects the Mode 7 ground plane from a focus point associated with the kart.
 
-Simply drawing Mario lower on the screen does not work. The sprite may move, but the road, shadow, rivals and collision calculations still belong to the old projection. The result is a kart that appears to float away from the ground.
+Simply drawing Mario lower on the screen doesn't work. The sprite moves, but the road, shadow, opponents, and collision calculations still belong to the old projection. The result is a kart that appears to float above the ground.
 
-The solution was to change the camera reference itself. **The kart stays in its new screen position while the projected scenery is brought closer to it**, similar to the visual effect produced when accelerating in the original game.
+The solution was to change the camera reference itself. **The kart stays in its new screen position while the projected scenery moves closer to it**, in a way similar to the visual effect seen when accelerating in the original game.
 
-This became especially important at the starting grid. After expanding the Mode 7 area to fill all 224 lines, the grid ended up too far ahead of Mario: the kart was in the desired position, but the rivals and the painted grid mark were left behind in the old projection. Moving the kart again was not the answer. The scenery itself had to be brought back into the correct relationship with the kart.
+This proved especially important on the starting grid. After expanding the Mode 7 area to fill all 224 lines, the grid ended up too far ahead of Mario: the kart was in the desired position, but the opponents and the painted grid marker had been left behind in the old projection. Moving the kart again wasn't the answer. The scenery itself had to be brought back into the correct relationship with the kart.
 
-The DSP-1's effective focus point is therefore moved forward along the direction of the view, and the camera transitions gradually into its new position when the race starts rather than switching instantly.
+That's why the DSP-1's effective focus point is shifted forward along the viewing direction, and why the camera gradually transitions to its new position as the race begins instead of switching abruptly.
 
-**The kart stays where it belongs; the world is brought toward it.**
+**The kart stays where it belongs; the world moves closer to it.**
 
-Version 1.2 refined this relationship. The point of the track that the game treats as the kart's position was still sitting about 37 screen rows above the kart's feet (the original game has it about 6 rows above), so collisions with walls, edges and pits triggered too early. The ground projection is now realigned with the kart's on-screen position, so the point under the kart is drawn where the kart actually touches the ground.
+Version 1.2 refined this relationship. The track point the game treated as the kart's position was still about 37 screen rows above the kart's feet (in the original game, it is about 6 rows above them), so collisions with walls, track edges, and pits triggered too early. The ground projection is now realigned with the kart's screen position, so the point beneath the kart is drawn where the kart actually touches the ground.
 
-Version 2.0 introduces a second camera option: the **wide-horizon camera**, enabled by default on all 20 tracks. It provides a more open, higher view with its own horizon, and is also used during the intro, the starting zoom and the finish turn. Press **SELECT during a race** to switch between the wide-horizon and classic cameras on the fly. SELECT has no effect in menus.
+Version 2.0 introduces a second camera option: the **wide-horizon camera**, enabled by default on all 20 tracks. It provides a more open, higher view with its own horizon, and is also used during the intro, starting zoom, and finish-line turn. Press **SELECT during a race** to switch on the fly between the wide-horizon camera and the classic fullscreen camera. SELECT has no effect in menus.
 
-Both camera options retain the fullscreen projection and the corrections developed in earlier versions. The new camera is not a separate mode of the game; it is an alternative view built around the same fullscreen foundation.
+Both camera options retain fullscreen projection and the fixes developed in earlier versions. The new camera is not a separate game mode: it is an alternative view built on the same fullscreen foundation.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-235523" src="https://github.com/user-attachments/assets/bf975651-62c8-4ca9-b89d-275134a13105" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-225311" src="https://github.com/user-attachments/assets/ccef2f32-302b-4048-bc9e-7a9cb7ac8702" />
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-032540" src="https://github.com/user-attachments/assets/70bff508-ffa6-4a1e-886f-15d4369451b0" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-032728" src="https://github.com/user-attachments/assets/cd414d84-033b-4867-8f5c-935351be6fb6" />
 
-## What changes
+## What's changed
 
-* **True fullscreen in 1P.** The race view uses the complete 256×224 display.
-* **Two camera views.** The new wide-horizon camera is enabled by default on all 20 tracks. Press SELECT during a race to switch between it and the classic fullscreen camera. The new view also covers the intro, starting zoom and finish turn.
-* **Backgrounds adapted across all 20 tracks.** Skies are extended to avoid black bands and colour jumps. Newly exposed areas are filled using the tone of the adjacent gradient band. Koopa Beach clouds appear at all three heights from the starting grid, and Ghost Valley pillars are properly clipped.
-* **New camera reference.** The kart, road, rivals, objects, shadows and collision logic remain consistent with the new projection.
-* **Collisions aligned with the kart.** Collisions with walls, track edges and pits happen where the kart actually touches them, not before.
-* **HUD relocation.** The extra space allows the position digits, car counter and coin counter to be rearranged without the original layout constraints. The small position digit is moved about 8 pixels left, while the large finishing-position digit is moved into the new space.
-* **Centered tables and banners.** The LAP TIME table and standings faces are moved 25 pixels down. Game Over, ROUND 1, Ranked Out and the RETRY / END menus are also repositioned. The ROUND banner is corrected in v2.0.
-* **Position-dependent effects fixed.** Bananas, crush smoke, Monty Moles, lost coins and other effects that were tied to the old kart position are moved to match the new camera layout.
-* **Lakitu's rescue works in fullscreen.** After falling off the track, Lakitu comes into view, picks up the kart with the coin and lifts it back onto the track, as in the original game. His head, cloud and the leftover "three hairs" are kept from appearing at the bottom edge of the screen during his entrance, rescue and departure.
-* **Rival scaling refined.** The eleven original rival drawings are preserved, but their sizes are selected according to a new geometric distribution chosen after comparing the alternatives in motion. The normal player size is unchanged.
-* **Starting-grid alignment refined.** The lateral correction to the starting grid is applied from the beginning of the camera approach. The full zoom and orbit of the introduction remain intact.
-* **Lakitu shadows corrected.** His shadow is corrected in fullscreen and in both split-screen views, while the previous lower-edge body correction is retained.
-* **Performance tuned.** The check that decides whether the fullscreen logic applies is computed once per frame instead of dozens of times. In the heaviest scene tested (Lakitu's rescue), lagged frames dropped from 18% to practically zero compared with the build before this optimization. v1.3 trims the load further: in the heaviest race start tested, the peak CPU load dropped from 95.7% to 90.5% (vanilla: 89%), and no lagged frames were measured in the first 1,061 frames of the Mushroom, Flower and Star Cup starts (50cc). v2.0 further reduces CPU cycles without changing the rendered output.
-* **2P preserved.** The fullscreen logic is restricted to 1P. The 2-player branch keeps the original game logic through dedicated gates, while side effects that leaked into 2P were fixed individually. Lakitu's coin and lost coins in 2P are drawn at the correct height instead of 88 pixels too low after playing a 1P race in the same session.
-* **Secondary graphical issues fixed.** Credits flicker, retry text in 2P, Time Trial artifacts, a stray ball behind Mario at the start of Time Trial, Lakitu's shadow during the rescue sequence, bottom-edge sprites, coin/life counter flicker, and several other problems were tracked down and corrected. v2.0 also fixes the duplicated player face on winning, mountain flicker during loading, intermittent black and blue lines in Ghost Valley, and the oil slick's collision threshold.
-* **Attract mode corrected.** The attract mode is resynchronised in v2.0, with the original rendering preserved apart from the hack's signature.
-* **Title screen.** A discreet white `Fullscreen Edition · Psicopompo` line was added below Nintendo's copyright. The original copyright line was also nudged 2 pixels to the right to center it.
+* **True fullscreen in 1P.** The race view uses the full 256×224 pixels.
+* **Two camera views.** The new wide-horizon camera is enabled by default on all 20 tracks. Press SELECT during a race to switch between it and the classic fullscreen camera. The new view is also used for the intro, starting zoom, and finish-line turn.
+* **Adapted scenery across all 20 tracks.** Skies are extended to prevent black bands and color jumps. Newly visible areas are filled using the tone of the adjacent gradient band. Koopa Beach clouds appear at all three heights from the starting grid, and Ghost Valley pillars are clipped correctly.
+* **New camera reference.** The kart, road, opponents, objects, shadows, and collision logic remain consistent with the new projection.
+* **Kart-aligned collisions.** Collisions with walls, track edges, and pits occur where the kart actually touches them, rather than too early.
+* **HUD repositioning.** The extra space makes it possible to rearrange the position digits, car counter, and coin counter without the original layout's constraints. The small position digit moves about 8 pixels to the left, and the large finishing-position digit moves into the newly available space.
+* **Centered tables and banners.** The LAP TIME table and ranking faces are moved down by 25 pixels. Game Over, ROUND 1, Ranked Out, and the RETRY / END menus are also repositioned. The ROUND banner is fixed in v2.0.
+* **Position-dependent effects fixed.** Bananas, squash smoke, Monty Moles, dropped coins, and other effects tied to the kart's old position are moved to fit the new camera layout.
+* **Lakitu's rescue works in fullscreen.** After falling off the track, Lakitu enters the scene, picks up the kart with his fishing line and coin, and returns it to the track, as in the original game. His head, cloud, and leftover “three hairs” are prevented from appearing along the bottom edge of the screen during his entrance, rescue, and departure.
+* **Refined opponent scaling.** The original eleven opponent drawings are retained, but their sizes are selected using a new geometric distribution chosen after comparing the alternatives in motion. The player's normal size is unchanged.
+* **Refined starting-grid alignment.** The grid's lateral correction is applied from the beginning of the camera's approach. The full intro zoom and orbit are preserved.
+* **Lakitu shadows fixed.** His shadow is corrected in fullscreen and in both split-screen views, while retaining the earlier fix for his body appearing at the bottom edge.
+* **Performance tuned.** The check that determines whether fullscreen logic should be applied is calculated once per frame instead of dozens of times. In the heaviest measured scene (Lakitu's rescue), delayed frames dropped from 18% to virtually zero compared with the build before that optimization. v1.3 reduced the load further: in the heaviest measured race start, peak CPU load fell from 95.7% to 90.5% (original: 89%), and no delayed frames were measured during the first 1,061 frames of the 50cc Mushroom, Flower, and Star Cup starts. v2.0 reduces CPU cycles further without changing the rendered result.
+* **2P preserved.** Fullscreen logic is restricted to 1P. The 2-player branch retains the game's original logic through dedicated gates, and side effects that leaked into 2P were fixed one by one. In 2P, Lakitu's coin and dropped coins are drawn at the correct height instead of 88 pixels too low after a 1P race has been played in the same session.
+* **Other graphical issues fixed.** Credit-screen flicker, 2P retry text, Time Trial artifacts, a stray ball behind Mario at the start of Time Trial, Lakitu's shadow during the rescue sequence, sprites at the bottom edge, coin and life counter flicker, and several other issues were tracked down and fixed. v2.0 also fixes the duplicated player face after winning, mountain flicker during loading, intermittent black and blue lines in Ghost Valley, and the oil slick's collision threshold.
+* **Attract mode fixed.** In v2.0, attract mode is resynchronized, preserving the original rendering apart from the hack signature.
+* **Title screen.** A subtle white line, `Fullscreen Edition · Psicopompo`, was added below Nintendo's copyright notice. The original copyright line was also shifted 2 pixels to the right to center it.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
+<p align="center">
+  <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo)-261012-030213" src="https://github.com/user-attachments/assets/ed38c50b-da13-445b-9caf-d51ff9f34569" />
+  <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo)-261012-030211" src="https://github.com/user-attachments/assets/ce5ef69c-f19b-4fdf-bc26-9e0ffd75e452" />
+</p>
+<p align="center"><sub><span style="color: white;">Both selectable camera views.</span></sub></p>
 
-## Map and rear-view mirror: gone, on purpose
+## Map and rear-view mirror: deliberately removed
 
-The original idea was to keep both as small insets over the full race view.
+The original idea was to keep both as small overlays on top of the full race view.
 
-Both are secondary Mode 7 renders, however, and keeping them meant dividing the frame again partway down the screen. That went directly against the goal of a clean fullscreen race view and introduced a new collection of timing, HDMA and rendering problems.
+However, both are secondary Mode 7 renders, and keeping them would have meant splitting the frame again halfway down the screen. That went directly against the goal of a clean fullscreen race view and introduced a new set of timing, HDMA, and rendering problems.
 
-The map and rear-view mirror were therefore left out of fullscreen racing. The **Time Trial results map remains visible**, including the BEST 5 / BEST LAP information.
+So the map and rear-view mirror were left out of fullscreen races. **The Time Trial results map remains visible**, including the BEST 5 / BEST LAP information.
 
-**A clean full-screen race view won over a cluttered compromise.**
+**A clean fullscreen race view won out over a cluttered compromise.**
 
-Two-player mode retains the original split-screen presentation.
+The 2-player mode retains its original split-screen presentation.
 
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003628" src="https://github.com/user-attachments/assets/3c5f4f1a-1f72-4f38-85d1-d4f236b2507d" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-013030" src="https://github.com/user-attachments/assets/513fa905-178b-40e1-984c-91c2062df0cf" />
 
@@ -98,97 +102,99 @@ Two-player mode retains the original split-screen presentation.
 
 This turned out to be much deeper than moving a sprite and changing a few coordinates.
 
-The game combines the DSP-1, Mode 7, HDMA, OAM, sprite-depth sorting, collision routines, screen-space limits, color windows and several other systems that all assumed the original 1-player layout.
+The game combines the DSP-1, Mode 7, HDMA, OAM, sprite depth sorting, collision routines, screen-space limits, color windows, and several other systems that assumed the original 1-player layout.
 
-Almost every major fix opened another problem.
+Almost every major fix opened up another problem.
 
-Rivals could pass through Mario because the collision code still used the old depth range. Pipes could become effectively invisible to collision detection. Objects could disappear too early because the new camera pushed them outside the original visibility limits. Sprites could wrap from the bottom of the screen to the top because the SNES stores their Y coordinate in 8 bits. Lakitu, shadows, smoke, coins, bananas and other effects could all remain tied to the old player position.
+Opponents could pass through Mario because the collision code still used the old depth range. Pipes could become almost invisible to collision detection. Objects could disappear too early because the new camera pushed them beyond the original visibility limits. Sprites could jump from the bottom edge of the screen to the top because the SNES stores their Y coordinate in 8 bits. Lakitu, shadows, smoke, coins, bananas, and other effects could all remain tied to the player's old position.
 
-Lakitu's rescue was a good example. His script waits for his Y coordinate to reach certain values, chosen for the original screen range. With the larger view his path crosses negative values, so those waits, and the coin that he carries, never completed. The checks had to be adapted without changing his speed or sequence.
+Lakitu's rescue is a good example. Its script waits for its Y coordinate to reach certain values chosen for the original screen range. With the wider view, its path crosses negative values, so those waits—and the coin it carries—would never complete. The checks had to be adapted without changing its speed or sequence.
 
-Even once the rescue worked, Lakitu kept leaving traces at the bottom of the screen. The rescue starts with a negative Y coordinate, so his head and cloud showed up in the extra lines at the bottom while he came down from above and again when he left upward; those elements are now hidden during those moments. Fixing that exposed one more problem: his three leftover hair pieces stayed drawn at the bottom edge for the rest of the race, because the game does not rewrite those sprite slots once Lakitu is done. Those are now parked off-screen, which also cleans up save states made with earlier versions.
+Even after the rescue worked, Lakitu still left traces at the bottom of the screen. The rescue begins with a negative Y coordinate, so his head and cloud appeared in the extra bottom lines as he descended from above, and again as he departed upward. Those elements are now hidden at those moments. Fixing that revealed another problem: his three leftover hair pieces remained drawn at the bottom edge for the rest of the race because the game does not rewrite those sprite slots when Lakitu finishes. They are now parked off-screen, which also cleans up save states created with earlier versions.
 
-The OAM ordering of the karts also had to be investigated to understand why some rivals overlapped incorrectly. Some experimental fixes worked visually but cost too many CPU cycles, causing slowdown in the NTSC version. Those approaches had to be discarded and replaced with much cheaper hooks.
+The karts' OAM order also had to be investigated to understand why some opponents overlapped incorrectly. Some experimental fixes worked visually but cost too many CPU cycles and caused slowdown in the NTSC version. Those approaches had to be discarded and replaced with much cheaper hooks.
 
-Profiling the slowdowns showed that one of the hooks was the culprit: the check that decides whether the fullscreen logic applies was being run 40 to 55 times per frame by the sprite-drawing routines. In the heaviest scene tested (Lakitu's rescue), the game logic was taking about as long as the frame itself. The result of that check is now computed once per frame and read directly by the most frequently called routines. v1.3 goes one step further: the projection and object-culling code reads that cached result too, and the three chained wrappers that decide whether an object is on screen were merged into one routine. Normal driving, race starts with all eight karts and full races on Donut Plains showed no lag.
+Profiling the slowdowns revealed that one of those hooks was the culprit: the check that determines whether fullscreen logic should be applied was being run by sprite-drawing routines 40 to 55 times per frame. In the heaviest measured scene (Lakitu's rescue), the game's logic took almost as long as the frame itself. Now the result of that check is calculated once per frame and read directly by the most frequently called routines. v1.3 goes a step further: the projection and object-culling code also reads the cached result, and the three chained wrappers that determine whether an object is on-screen were merged into a single routine. Normal driving, race starts with all eight karts, and full races at Donut Plains showed no slowdown.
 
-The work therefore became heavily regression-driven. **Dozens of reproducible save states** covering race starts, cups, collisions, effects, Time Trial, Ranked Out, Game Over, retry screens, credits, 2P and other situations were repeatedly replayed and compared frame by frame after changes.
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-040354" src="https://github.com/user-attachments/assets/c0163555-2ec3-4b5d-88d6-7f344ac86a8d" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-041922" src="https://github.com/user-attachments/assets/653d7a3b-8982-4892-b8ef-f2c47345538c" />
 
-For v1.4, the new rival-size distribution was checked over **3,360 compared frames**. Camera, timer, position/velocity fields and player sprites matched the preceding reference, and a 360-frame split-screen test also matched its full images. This is not a claim of exhaustive mode coverage.
+The work therefore became heavily regression-driven. **Dozens of reproducible save states** covering race starts, cups, collisions, effects, Time Trial, Ranked Out, Game Over, retry screens, credits, 2P, and other situations were replayed and compared frame by frame after every change.
 
-Version 2.0 added dedicated regression checks for the new camera and adapted backgrounds. In bsnes, cold attract mode was compared against the original ROM over **2,950 frames**, with identical output apart from the hack's signature. **Twenty-seven real race states**, compared over 120 frames each, showed no rendering differences. The finish-camera OAM also matched the approved build, and multi-thousand-frame regression tests were run on the tracks receiving special background treatment.
+For v1.4, the new opponent-size distribution was checked across **3,360 compared frames**. The camera, timer, position and speed fields, and player sprites matched the previous reference, and a separate 360-frame split-screen test also matched in its complete images. This is not a claim of exhaustive coverage of every mode.
 
-Performance was checked separately. In a cold-booted Bowser Castle 1 Time Trial with scripted hard turns at high speed, the original USA ROM, v1.5 and v2.0 produced identical clock ticks (11,640 of 12,000) and the same times along the same trajectory. In a Bowser Castle 3 race state, v1.5 and v2.0 also matched (2,993 of 3,000 ticks) and produced the same final time.
+Version 2.0 added dedicated regression checks for the new camera and adapted scenery. In bsnes, the cold-start attract mode was compared with the original ROM over **2,950 frames**, with identical output apart from the hack signature. **Twenty-seven real race states**, each compared for 120 frames, showed no rendering differences. The finish-camera OAM also matched the approved build, and regression tests spanning several thousand frames were run on tracks with special scenery treatment.
 
-The hard-turn stutter observed in these tests is native game behaviour, identical with and without the patch. For that reason, v2.0 does not modify AI scheduling or physics.
+Performance was tested separately. In a cold-start Bowser Castle 1 Time Trial, with scripted hard turns at high speed, the original USA ROM, v1.5, and v2.0 produced identical clock ticks (11,640 out of 12,000) and the same times along the same trajectory. In a Bowser Castle 3 race state, v1.5 and v2.0 also matched (2,993 out of 3,000 ticks) and produced the same final time.
 
-A fix was not considered done just because it worked in one screenshot. It had to survive the rest of the test suite.
+The stutter during hard turns seen in these tests is native game behavior, identical with and without the patch. For that reason, v2.0 does not modify AI scheduling or physics.
+
+A fix wasn't considered finished just because it worked in a screenshot. It had to survive the rest of the test suite.
 
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
 
-## AI-assisted development
+## Development with AI assistance
 
 This project was developed in collaboration with an **AI assistant**.
 
-The AI handled a large part of the technical implementation: analysing the game's code, writing reverse-engineering and diagnostic tools, implementing patches, testing hypotheses and automating repetitive checks.
+The AI handled much of the technical implementation: analyzing the game's code, writing reverse-engineering and diagnostic tools, implementing patches, testing hypotheses, and automating repetitive checks.
 
-**Psicopompo directed the project**, deciding what to investigate, proposing and discarding approaches, interpreting results, identifying problems, choosing which solutions to pursue, testing the builds and validating the final behavior.
+**Psicopompo directed the project**, deciding what to investigate, proposing and discarding approaches, interpreting results, identifying problems, choosing which solutions to pursue, testing builds, and validating the final behavior.
 
-The distinction matters: the AI did a great deal of the programming work, but the project itself was not produced by asking for a finished hack and accepting the first result. It was an iterative process of investigation, implementation, testing, failure, correction and regression testing.
+That distinction matters: the AI did a large share of the programming work, but the project was not produced by asking for a finished hack and accepting the first result. It was an iterative process of investigation, implementation, testing, failures, fixes, and regression testing.
 
 ## Applying the patch
 
-Input: a clean **Super Mario Kart (USA)** ROM, headerless.
+Input: a clean, headerless **Super Mario Kart (USA)** ROM.
 
-|          |      Size | CRC32      | MD5                                | SHA-1                                      |
-| -------- | --------: | ---------- | ---------------------------------- | ------------------------------------------ |
-| Original |   524,288 | `CD80DB86` | `7f25ce5a283d902694c52fb1152fa61a` | `47E103D8398CF5B7CBB42B95DF3A3C270691163B` |
-| Patched  | 1,048,576 | `61307000` | `c140f59f1d272ed263084a27dcbef80e` | —                                          |
+| ROM | Size | CRC32 | MD5 | SHA-1 | SHA-256 |
+| --- | ---: | --- | --- | --- | --- |
+| Original (USA, clean and headerless) | 524,288 bytes | `CD80DB86` | `7f25ce5a283d902694c52fb1152fa61a` | `47E103D8398CF5B7CBB42B95DF3A3C270691163B` | Not provided |
+| Patched (v2.0) | 1,048,576 bytes | `E9B8C210` | `0f4d2c70b6057c8af55f584244d78911` | `3C0A0D7B4E87CD6A54151F0B953A003E9353E65B` | `008a5cedb569d07487b93dbfdb0c09c98f2b30cfecfe41916fee663c5fc9992b` |
 
-Download **`Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo).zip`** from the releases. The archive contains the IPS and BPS patches, `LÉEME.md`, `README.md` and English and Spanish changelogs. No game ROM is included.
+Download **`Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo).zip`** from the releases. The archive contains the IPS and BPS patches, `LÉEME.md`, `README.md`, and the release notes in English and Spanish. No game ROM is included.
 
-* `Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo).bps` — **recommended**; it verifies the input ROM. Use Flips, beat, MultiPatch or RomPatcher.js.
+* `Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo).bps` — **recommended**; verifies the input ROM. Use Flips, beat, MultiPatch, or RomPatcher.js.
 * `Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo).ips` — use any IPS-compatible patcher.
 
-The output is expanded to 1 MB. New code and data are stored in the added space, and the ROM size byte is updated. The internal checksum is corrected, so no checksum warning should appear on compatible flashcarts or in patching tools.
+The output expands to 1 MB. New code and data are stored in the added space, and the ROM size byte is updated. The internal checksum is corrected, so compatible flash carts and patching tools should not report a checksum warning.
 
-Apply **only one patch** to a copy of your clean ROM. The patch is cumulative over the original ROM: **do not apply v2.0 on top of v1.4 or v1.5**.
+Apply **only one patch** to a copy of your clean ROM. The patch is cumulative from the original ROM: **do not apply v2.0 on top of v1.4 or v1.5**.
 
 The PAL version is not supported.
 
 ## Version history
 
-* **v2.0** – Introduced the wide-horizon camera, enabled by default on all 20 tracks, with in-race SELECT switching between the new and classic cameras. The new view also covers the intro, starting zoom and finish turn. Adapted backgrounds across all 20 tracks, including extended skies, seamless gradient fills, Koopa Beach clouds at all three heights from the starting grid, and clipped Ghost Valley pillars. Fixed the duplicated player face on winning, mountain flicker during loading, intermittent black and blue lines in Ghost Valley, the oil slick's native collision threshold and the ROUND banner alignment. Resynchronised attract mode and reduced CPU cycles without changing rendered output. Retains all v1.5 improvements. Validated in bsnes and RetroArch through attract-mode comparison, 27 real race states, finish-camera OAM comparison and extended regression tests. No real-hardware testing is claimed.
+* **v2.0** – Introduces the wide-horizon camera, enabled by default on all 20 tracks, with switching via SELECT during a race between the new and classic cameras. The new view is also used for the intro, starting zoom, and finish-line turn. Scenery is adapted across all 20 tracks, including extended skies, seamless gradient fills, Koopa Beach clouds at all three heights from the starting grid, and clipped Ghost Valley pillars. Fixes the duplicated player face after winning, mountain flicker during loading, intermittent black and blue lines in Ghost Valley, the oil slick's native collision threshold, and the ROUND banner alignment. Resynchronizes attract mode and reduces CPU cycles without changing the rendered result. Includes all v1.5 improvements. Validated in bsnes and RetroArch through attract-mode comparison, 27 real race states, finish-camera OAM comparison, and extended regression testing. No claim is made that it has been tested on real hardware.
 
-* **v1.5** – Fixed the Time Trial results screen. Results now correctly show every lap, highlighted times, TOTAL, and the map with BEST 5 / BEST LAP, while racing remains fullscreen and the Grand Prix results layout is preserved. Tested with Time Trial and a normal race. Includes all v1.4 improvements.
+* **v1.5** – Fixes the Time Trial results screen. Results now correctly display all laps, highlighted times, TOTAL, and the map with BEST 5 / BEST LAP, while the race remains fullscreen and the Grand Prix results layout is preserved. Tested with Time Trial and a normal race. Includes all v1.4 improvements.
 
-* **v1.4** – New geometric distribution of the eleven original rival sizes, selected after comparing the alternatives in motion. The normal player size is unchanged. The lateral starting-grid correction now applies from the beginning of the camera approach while preserving the full zoom and orbit. Corrected Lakitu's shadow in fullscreen and both split-screen views while retaining the previous lower-edge body correction. The changes were checked over 3,360 compared frames, with a separate 360-frame split-screen comparison. Tested in bsnes and RetroArch and approved through visual testing.
+* **v1.4** – Introduces a new geometric distribution for the original eleven opponent sizes, selected after comparing the alternatives in motion. The player's normal size is unchanged. The starting-grid lateral correction is now applied from the beginning of the camera's approach while preserving the full zoom and orbit. Fixes Lakitu's shadow in fullscreen and both split-screen views, retaining the earlier fix for his body appearing at the bottom edge. Changes were checked across 3,360 compared frames, with a separate 360-frame split-screen comparison. Tested in bsnes and RetroArch and approved through visual testing.
 
-* **v1.3** – Lakitu no longer peeks out at the bottom of the screen: his head and cloud are hidden while he comes down from above or leaves upward (Ghost Valley, the water falls), and the leftover pieces (the "three hairs") that stayed behind at the start and after a rescue are cleaned up. In 2P, Lakitu's coin and lost coins are drawn at the right height instead of 88 pixels too low. Lower CPU load in 1P (peak load in the heaviest start tested: 95.7% → 90.5%). Includes all v1.2 fixes.
+* **v1.3** – Lakitu no longer appears at the bottom of the screen: his head and cloud are hidden while he descends from above or leaves upward (Ghost Valley, waterfalls), and the leftover pieces (“three hairs”) that remained at the start and after a rescue are cleared. In 2P, Lakitu's coin and dropped coins are drawn at the correct height instead of 88 pixels too low. Lower CPU load in 1P (peak load at the heaviest measured start: 95.7% → 90.5%). Includes all v1.2 fixes.
 
-* **v1.2** – The ground projection is realigned with the kart's on-screen position, so the track under the kart matches where the kart is drawn: collisions with walls, edges and pits now happen at the right place (they used to trigger too early). Fixed Lakitu's rescue after falling off the track. Reduced slowdowns by computing the fullscreen check once per frame. Includes all v1.1 fixes.
+* **v1.2** – The ground projection is realigned with the kart's screen position, so the track beneath the kart lines up with where the kart is drawn: collisions with walls, track edges, and pits now occur in the right place (previously they triggered too early). Fixes Lakitu's rescue after falling off the track. Reduces slowdown by calculating the fullscreen check once per frame. Includes all v1.1 fixes.
 
-* **v1.1** – Fixed a few stray white pixels that appeared in the transition band of the picture. The LAP TIME table and standings faces were moved 5 pixels further down.
+* **v1.1** – Fixes stray white pixels in the image's transition band. The LAP TIME table and ranking faces were moved down another 5 pixels.
 
-* **v1.0** – First release.
+* **v1.0** – Initial release.
 
 ## Status and limitations
 
 * **USA only.** The PAL version is not supported.
 * **224 lines / 60 Hz NTSC.**
 * Tested in **bsnes** and **RetroArch**. The SNES9x core has not been tested.
-* **Real hardware and flashcarts:** v2.0 has not been tested on real hardware or flashcarts. Earlier versions may have been tested on hardware, but this does not establish compatibility for v2.0.
-* Validation for v2.0 includes a 2,950-frame attract-mode comparison against the original ROM, 27 real race states compared over 120 frames each, finish-camera OAM verification and multi-thousand-frame regression tests on the tracks receiving special background treatment.
-* The 50cc and 100cc cups were played through with v1.1. Later versions have received additional state-by-state regression, frame-by-frame comparison, performance measurements and play sessions, but this does not guarantee that every mode is free of bugs. Some modes have received less testing than others.
-* Track objects such as pipes still follow the original game's section-based loading rules. With the new camera reference, some appearance and disappearance boundaries are more noticeable.
-* The 2-player mode retains its original split-screen behavior and does not use the fullscreen 1-player camera.
-* The map and rear-view mirror are hidden during fullscreen racing. The Time Trial results map remains visible.
-* Bug reports are welcome. Please include the emulator and core, game mode, and a save state that reproduces the problem.
+* **Real hardware and flash carts:** v2.0 has not been tested on real hardware or flash carts. Earlier versions may have been tested on hardware, but that does not establish v2.0 compatibility.
+* v2.0 validation includes a 2,950-frame attract-mode comparison against the original ROM, 27 real race states compared for 120 frames each, verification of the finish-camera OAM, and regression tests spanning several thousand frames on tracks with special scenery treatment.
+* The 50cc and 100cc cups were completed with v1.1. Later versions have received additional state-by-state regression tests, frame-by-frame comparisons, performance measurements, and play sessions, but this does not guarantee that every mode is bug-free. Some modes have received less testing than others.
+* Track objects such as pipes still follow the game's original section-based loading rules. With the new camera reference, some appearance and disappearance boundaries are more noticeable.
+* 2-player mode retains its original split-screen behavior and does not use the 1-player fullscreen camera.
+* The map and rear-view mirror are hidden during fullscreen races. The Time Trial results map remains visible.
+* Bug reports are welcome. Please include the emulator and core, game mode, and a save state that reproduces the issue.
 
-## Credits and notice
+## Credits and disclaimer
 
-* **Psicopompo** — project direction, research, analysis, solution design, testing and validation.
-* **AI assistant** — code analysis, reverse-engineering tools, patch implementation and test automation, under Psicopompo's direction.
+* **Psicopompo** — project direction, research, analysis, solution design, testing, and validation.
+* **AI assistant** — code analysis, reverse-engineering tools, patch implementation, and test automation, under Psicopompo's direction.
 
 Super Mario Kart © Nintendo.
 
