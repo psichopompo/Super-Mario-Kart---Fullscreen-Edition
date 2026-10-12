@@ -10,8 +10,6 @@ Por **Psicopompo** · ROM USA · IPS y BPS · Versión actual: **v2.0**
 
 ---
 
-<img width="256" height="224" alt="Super Mario Kart (USA) (patched)-261002-222409" src="https://github.com/user-attachments/assets/e7da9dbb-28f2-425a-bfb0-714e8307a836" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-222732" src="https://github.com/user-attachments/assets/f5519df5-4ac0-479e-bf02-50e9db8743f5" />
-
 ## Por qué existe
 
 Super Mario Kart es un juego precioso que siempre ha jugado su modo de 1 jugador con una mano atada a la espalda. La carrera se dibuja en una parte recortada de la pantalla, mientras que la zona inferior queda reservada para un mapa o un retrovisor heredados del diseño a pantalla partida del modo 2 jugadores.
@@ -20,11 +18,11 @@ El primer paso obvio es quitar el recorte que parte la imagen para que el suelo 
 
 Pero eso es solo el principio.
 
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-031613" src="https://github.com/user-attachments/assets/29a52de2-30c4-401c-be1a-4015c5d3c60a" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-030909" src="https://github.com/user-attachments/assets/2534d407-c5a0-4448-8118-df31ec4ef981" />
+
 La cámara sigue apuntando a la posición antigua, el kart se sigue dibujando para la distribución antigua, y la sombra, los rivales, las colisiones, los objetos, el HUD y los efectos de pantalla siguen dando por hecho que la parte inferior de la imagen es otra cosa.
 
 **Esto no es solo «quitar el mapa».** Se cambia la propia referencia de la cámara, y todo lo que depende de ella tiene que seguirla.
-
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003333" src="https://github.com/user-attachments/assets/631fc658-0991-45ac-8723-63d9ac101e27" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261003-003554" src="https://github.com/user-attachments/assets/46090e30-12c6-43ff-b6fa-80ef56e649be" />
 
 ## La idea que hizo avanzar el proyecto
 
@@ -35,6 +33,8 @@ Cada arreglo parecía destapar otra parte del juego que seguía usando las coord
 Y entonces llegó la idea que cambió la dirección del proyecto: **el Jugador 2 ya tenía buena parte de la lógica de espacio de pantalla necesaria para colocar un kart alrededor de la posición que queríamos para la nueva vista de 1 jugador. ¿Por qué no reutilizar esa lógica para el Jugador 1?**
 
 No lo resolvió todo por sí sola, pero proporcionó una base mucho mejor que pelear cada efecto secundario por separado. Eso ahorró muchísimo tiempo y permitió concentrarse en los problemas más profundos de cámara y proyección.
+
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-040214" src="https://github.com/user-attachments/assets/fb3a2e64-65fb-4b7d-831a-8ecceedea7ad" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-041627" src="https://github.com/user-attachments/assets/1b3b37c2-3698-4f0c-b0d7-8d9ef875a610" />
 
 ## La cámara
 
@@ -56,7 +56,7 @@ La versión 2.0 introduce una segunda opción de cámara: la **cámara de horizo
 
 Ambas opciones de cámara conservan la proyección a pantalla completa y las correcciones desarrolladas en las versiones anteriores. La cámara nueva no es un modo aparte del juego: es una vista alternativa construida sobre la misma base de pantalla completa.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-235523" src="https://github.com/user-attachments/assets/bf975651-62c8-4ca9-b89d-275134a13105" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-225311" src="https://github.com/user-attachments/assets/ccef2f32-302b-4048-bc9e-7a9cb7ac8702" />
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-032540" src="https://github.com/user-attachments/assets/70bff508-ffa6-4a1e-886f-15d4369451b0" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-032728" src="https://github.com/user-attachments/assets/cd414d84-033b-4867-8f5c-935351be6fb6" />
 
 ## Qué cambia
 
@@ -78,7 +78,11 @@ Ambas opciones de cámara conservan la proyección a pantalla completa y las cor
 * **Attract mode corregido.** El attract mode se resincroniza en la v2.0, conservando el renderizado original salvo por la firma del hack.
 * **Pantalla de título.** Se añadió una línea discreta en blanco, `Fullscreen Edition · Psicopompo`, bajo el copyright de Nintendo. La línea de copyright original también se desplazó 2 píxeles a la derecha para centrarla.
 
-<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
+<p align="center">
+  <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo)-261012-030213" src="https://github.com/user-attachments/assets/ed38c50b-da13-445b-9caf-d51ff9f34569" />
+  <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo)-261012-030211" src="https://github.com/user-attachments/assets/ce5ef69c-f19b-4fdf-bc26-9e0ffd75e452" />
+</p>
+<p align="center"><sub><span style="color: white;">Las dos cámaras seleccionables.</span></sub></p>
 
 ## Mapa y retrovisor: fuera, a propósito
 
@@ -112,6 +116,8 @@ También hubo que investigar el orden OAM de los karts para entender por qué al
 
 Perfilar las ralentizaciones mostró que el culpable era uno de esos enganches: la comprobación que decide si se aplica la lógica de pantalla completa la ejecutaban las rutinas de dibujo de sprites entre 40 y 55 veces por fotograma. En la escena más pesada medida (el rescate de Lakitu), la lógica del juego tardaba casi tanto como el propio fotograma. Ahora el resultado de esa comprobación se calcula una vez por fotograma y lo leen directamente las rutinas que más se llaman. La v1.3 va un paso más allá: el código de proyección y de descarte de objetos también lee ese resultado en caché, y los tres envoltorios encadenados que deciden si un objeto está en pantalla se fusionaron en una sola rutina. La conducción normal, las salidas de carrera con los ocho karts y carreras completas en Donut Plains no mostraron retraso.
 
+<img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-040354" src="https://github.com/user-attachments/assets/c0163555-2ec3-4b5d-88d6-7f344ac86a8d" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v2 0) (by Psicopompo)-261012-041922" src="https://github.com/user-attachments/assets/653d7a3b-8982-4892-b8ef-f2c47345538c" />
+
 El trabajo se volvió, por tanto, fuertemente dirigido por regresiones. **Decenas de estados guardados reproducibles** que cubren salidas de carrera, copas, colisiones, efectos, Time Trial, Ranked Out, Game Over, pantallas de reintento, créditos, 2P y otras situaciones se reproducían y comparaban fotograma a fotograma tras cada cambio.
 
 Para la v1.4, la nueva distribución de tamaños de los rivales se comprobó a lo largo de **3.360 fotogramas comparados**. La cámara, el cronómetro, los campos de posición y velocidad y los sprites del jugador coincidían con la referencia anterior, y una prueba de 360 fotogramas a pantalla partida también coincidió en sus imágenes completas. Esto no es una afirmación de cobertura exhaustiva de todos los modos.
@@ -140,10 +146,10 @@ La distinción importa: la IA hizo una gran parte del trabajo de programación, 
 
 Entrada: una ROM limpia de **Super Mario Kart (USA)**, sin cabecera.
 
-|          |    Tamaño | CRC32      | MD5                                | SHA-1                                      |
-| -------- | --------: | ---------- | ---------------------------------- | ------------------------------------------ |
-| Original |   524.288 | `CD80DB86` | `7f25ce5a283d902694c52fb1152fa61a` | `47E103D8398CF5B7CBB42B95DF3A3C270691163B` |
-| Parcheada | 1.048.576 | `61307000` | `c140f59f1d272ed263084a27dcbef80e` | `1AEB6F1C0488D07AEBA402BD0C898CAF1E4779DD` |
+| ROM | Tamaño | CRC32 | MD5 | SHA-1 | SHA-256 |
+| --- | ---: | --- | --- | --- | --- |
+| Original (USA, limpia y sin cabecera) | 524.288 bytes | `CD80DB86` | `7f25ce5a283d902694c52fb1152fa61a` | `47E103D8398CF5B7CBB42B95DF3A3C270691163B` | No facilitado |
+| Parcheada (v2.0) | 1.048.576 bytes | `E9B8C210` | `0f4d2c70b6057c8af55f584244d78911` | `3C0A0D7B4E87CD6A54151F0B953A003E9353E65B` | `008a5cedb569d07487b93dbfdb0c09c98f2b30cfecfe41916fee663c5fc9992b` |
 
 Descarga **`Super Mario Kart - Fullscreen Edition (v2.0) (by Psicopompo).zip`** desde las releases. El archivo contiene los parches IPS y BPS, `LÉEME.md`, `README.md` y las notas de cambio en inglés y español. No se incluye ninguna ROM del juego.
 
