@@ -132,15 +132,13 @@ Un arreglo no se daba por terminado solo porque funcionara en una captura. Tení
 
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
 
-## Desarrollo con ayuda de una IA
+## Desarrollo
 
-Este proyecto se desarrolló en colaboración con un **asistente de IA**.
+Este proyecto se desarrolló mediante un proceso de **colaboración iterativa entre una persona y una IA**, basado en la interacción continua, la exploración conjunta y la retroalimentación mutua.
 
-La IA se encargó de buena parte de la implementación técnica: analizar el código del juego, escribir herramientas de ingeniería inversa y diagnóstico, implementar parches, poner a prueba hipótesis y automatizar comprobaciones repetitivas.
+El desarrollo implicó investigar distintas posibilidades, explorar enfoques, evaluar resultados, resolver problemas y perfeccionar soluciones mediante sucesivos ciclos de experimentación y pruebas. Las ideas evolucionaron, los planteamientos se ajustaron y las soluciones mejoraron a lo largo del proceso.
 
-**Psicopompo dirigió el proyecto**, decidiendo qué investigar, proponiendo y descartando enfoques, interpretando resultados, identificando problemas, eligiendo qué soluciones seguir, probando las builds y validando el comportamiento final.
-
-La distinción importa: la IA hizo una gran parte del trabajo de programación, pero el proyecto en sí no se produjo pidiendo un hack terminado y aceptando el primer resultado. Fue un proceso iterativo de investigación, implementación, pruebas, fallos, corrección y pruebas de regresión.
+El resultado final es fruto de esta colaboración continua, en la que el valor no reside en una contribución aislada, sino en cómo la interacción entre la persona y la IA dio forma al desarrollo en su conjunto.
 
 ## Aplicar el parche
 
