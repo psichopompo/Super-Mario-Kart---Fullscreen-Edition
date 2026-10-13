@@ -132,15 +132,13 @@ A fix wasn't considered finished just because it worked in a screenshot. It had 
 
 <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223050" src="https://github.com/user-attachments/assets/0e15be06-1bbe-4cb1-9b44-5df626976089" /> <img width="256" height="224" alt="Super Mario Kart - Fullscreen Edition (v1 0) (by Psicopompo)-261002-223113" src="https://github.com/user-attachments/assets/990be6ee-a48a-4e8c-a422-15ec17976c61" />
 
-## Development with AI assistance
+## Development
 
-This project was developed in collaboration with an **AI assistant**.
+This project was developed through an iterative collaboration between human and AI, built on continuous interaction, shared exploration, and mutual feedback.
 
-The AI handled much of the technical implementation: analyzing the game's code, writing reverse-engineering and diagnostic tools, implementing patches, testing hypotheses, and automating repetitive checks.
+The development process involved investigating possibilities, exploring approaches, evaluating results, solving problems, and refining solutions through repeated cycles of experimentation and testing. Ideas evolved, approaches were adjusted, and solutions improved throughout this process.
 
-**Psicopompo directed the project**, deciding what to investigate, proposing and discarding approaches, interpreting results, identifying problems, choosing which solutions to pursue, testing builds, and validating the final behavior.
-
-That distinction matters: the AI did a large share of the programming work, but the project was not produced by asking for a finished hack and accepting the first result. It was an iterative process of investigation, implementation, testing, failures, fixes, and regression testing.
+The final result reflects this ongoing collaboration, where the value lies not in any single contribution, but in how the interaction between human and AI shaped the development as a whole.
 
 ## Applying the patch
 
