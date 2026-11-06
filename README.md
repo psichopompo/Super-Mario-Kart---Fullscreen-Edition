@@ -217,7 +217,6 @@ These issues are still being investigated. The release improves compatibility an
 ## Credits and disclaimer
 
 * **Psicopompo** — project direction, research, analysis, solution design, testing, and validation.
-* **Assistant** — code analysis, reverse-engineering tools, patch implementation, and test automation, under Psicopompo's direction.
 
 Super Mario Kart © Nintendo.
 
