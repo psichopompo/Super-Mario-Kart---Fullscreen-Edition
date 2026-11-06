@@ -216,7 +216,7 @@ Estos problemas siguen bajo investigación. Esta versión mejora la compatibilid
 
 ## Créditos y aviso legal
 
-- **Psicopompo** — dirección del proyecto, investigación, análisis, diseño de soluciones, pruebas y validación.
+* **Psicopompo** — Autor del proyecto.
 
 Super Mario Kart © Nintendo.
 
