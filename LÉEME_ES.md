@@ -1,4 +1,4 @@
- <img width="1280" height="400" alt="Super Mario Kart – Fullscreen Edition" src="https://github.com/user-attachments/assets/838b9ed3-0d4c-4db8-a1d1-c81326d3d1ab" />
+<img width="1280" height="400" alt="Super Mario Kart – Fullscreen Edition" src="https://github.com/user-attachments/assets/838b9ed3-0d4c-4db8-a1d1-c81326d3d1ab" />
 
 # Super Mario Kart – Fullscreen Edition (USA)
 
@@ -6,7 +6,7 @@
 
 [![Super Mario Kart – Fullscreen Edition v3.0](https://img.youtube.com/vi/BO4YEe-mxVU/hqdefault.jpg)](https://youtu.be/BO4YEe-mxVU)
 
-Por **Psicopompo** · ROM USA · Parches IPS y BPS · Versión actual: **v3.0**
+Por **Psicopompo** · ROM USA · Parches IPS y BPS · Versión actual: **v3.1**
 
 ---
 
@@ -54,14 +54,28 @@ La versión 2.0 introdujo una segunda opción de cámara: la **cámara de horizo
 
 La versión 3.0 conserva ambas opciones de cámara e introduce una nueva arquitectura interna: **el DSP-1 ha sido sustituido por el chip de expansión SA-1**. La cámara alternativa sigue pudiéndose seleccionar durante la carrera.
 
+La versión 3.1 añade un segundo botón para cambiar de cámara: **X**, además de Select. Queda más cerca del pulgar que Select, así que cambiar de vista en plena carrera es más rápido. El botón Y sigue siendo el freno.
+
 Ambas perspectivas mantienen la proyección a pantalla completa y las correcciones desarrolladas en versiones anteriores. La segunda cámara no es un modo de juego independiente, sino una vista alternativa construida sobre la misma base de pantalla completa.
+
+## Novedades de la v3.1
+
+La versión 3.1 corrige varios problemas de la v3.0, sobre todo en el modo Contrarreloj (Time Trial):
+
+- **Menú RETRY alineado.** El menú CHANGE COURSE / RETRY de la Contrarreloj aparece ahora en su posición correcta al retirarte durante la carrera.
+- **Tamaño correcto del kart al cruzar la meta.** Al terminar una vuelta sin entrar en los récords, el kart se aleja con el tamaño correcto, igual que en el juego original. Antes se veía diminuto porque conservaba parámetros de la perspectiva a pantalla completa.
+- **Fantasma alineado con el jugador.** A pantalla completa, el fantasma de la Contrarreloj ya no aparece unos píxeles más abajo que tu kart. Ahora el kart del jugador se posiciona con la misma proyección que el resto de objetos y corredores, con las dos cámaras. Las colisiones no se ven afectadas: solo cambia la posición en pantalla, no la lógica del juego.
+- **Mapa inferior sin líneas desplazadas.** Al cruzar la meta, el mapa de la pantalla inferior ya no muestra líneas desplazadas, tampoco después de reiniciar con RETRY. Se limpian los restos de datos que podían quedar guardados de partidas anteriores.
+- **Segundo botón de cámara.** La cámara puede cambiarse con **X** además de con Select. El botón Y sigue siendo el freno.
+
+Se mantiene todo lo de la v3.0.
 
 ## Novedades y cambios
 
 - **Migración a SA-1.** El hack ha sido migrado del DSP-1 original al chip de expansión SA-1. Se trata de un importante cambio arquitectónico y constituye la base de esta nueva versión.
 - **Pantalla completa real en 1P.** La vista de carrera aprovecha los 256×224 píxeles.
 - **Minimapa flotante.** Un nuevo minimapa muestra el trazado del circuito durante las carreras sin renunciar a la vista ampliada. Se presenta como una superposición sobre la imagen, en lugar de ocupar una zona independiente de la pantalla.
-- **Dos perspectivas de cámara.** La cámara de horizonte amplio y la cámara alternativa a pantalla completa pueden intercambiarse durante la partida.
+- **Dos perspectivas de cámara.** La cámara de horizonte amplio y la cámara alternativa a pantalla completa pueden intercambiarse durante la partida, con Select o con X.
 - **Escenarios adaptados en los 20 circuitos.** Los cielos se amplían para evitar franjas negras y saltos de color. Las zonas recién visibles se rellenan utilizando el tono de la banda de degradado adyacente. Las nubes de Koopa Beach aparecen a las tres alturas de la parrilla de salida y los pilares de Ghost Valley se recortan correctamente.
 - **Fondos mejorados.** Se han perfeccionado los degradados del cielo y se han realizado correcciones gráficas adicionales.
 - **Nueva referencia de cámara.** El kart, la carretera, los rivales, los objetos, las sombras y la lógica de colisiones mantienen su coherencia con la nueva proyección.
@@ -115,6 +129,8 @@ El rendimiento se comprobó por separado. En una prueba de Time Trial en Bowser 
 
 La versión 3.0 lleva el proyecto un paso más allá con la migración a SA-1, el nuevo minimapa flotante, optimizaciones adicionales y pruebas ampliadas de compatibilidad con flashcarts.
 
+La versión 3.1 es una versión de refinamiento. Sus correcciones de la Contrarreloj se comprobaron frente a la v3.0 y frente al juego USA original: el tamaño del kart tras la meta se comparó paso a paso con la ROM original, y el modo para dos jugadores, los menús y el resto de modos se compararon con la v3.0.
+
 Una corrección no se consideraba terminada simplemente porque funcionase en una captura de pantalla. Tenía que superar el resto de las pruebas.
 
 ## Desarrollo
@@ -132,19 +148,19 @@ Se necesita una ROM limpia y sin cabecera de **Super Mario Kart (USA)**.
 | ROM | Tamaño | CRC32 |
 | --- | ---: | --- |
 | Original (USA, limpia y sin cabecera) | 524.288 bytes | `CD80DB86` |
-| Parcheada (v3.0) | 4.194.304 bytes | No facilitado |
+| Parcheada (v3.1) | 4.194.304 bytes | `69E4539F` |
 
 La ROM resultante ocupa **4 MB (4.194.304 bytes)**.
 
-Su checksum corregido en la cabecera SNES es:
+Su SHA-1 es `8C1B8EF3904501C29CB3E631AA6C760416548433` y su checksum corregido en la cabecera SNES es:
 
-- Checksum: `AE16`
-- Complemento del checksum: `51E9`
+- Checksum: `643F`
+- Complemento del checksum: `9BC0`
 
 Se incluyen dos parches:
 
-- `SMK_Fullscreen_USA.bps` — **recomendado**; verifica la ROM de entrada antes de aplicar el parche.
-- `SMK_Fullscreen_USA.ips` — no verifica la ROM de entrada.
+- `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).bps` — **recomendado**; verifica la ROM de entrada y el resultado al aplicar el parche.
+- `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).ips` — no verifica la ROM de entrada.
 
 El parche IPS se ha verificado contra la ROM final utilizando un decodificador propio, pero no se ha probado con herramientas de parcheo de terceros como Flips o Lunar IPS.
 
@@ -178,11 +194,13 @@ El LED rojo del flashcart puede permanecer encendido durante la partida. Este co
 
 - **FXPAK Pro:** ocasionalmente pueden aparecer dos pequeños píxeles blancos en la zona oscura del lado izquierdo de la pantalla en Ghost Valley.
 - **Parpadeo de fondos:** pueden producirse parpadeos ocasionales durante momentos especialmente exigentes.
-- **Firmware SD2SNES no oficial:** se ha informado de congelaciones aleatorias en un clon que utilizaba el firmware `sd2SNES+`. Este problema no se ha reportado con el firmware oficial.
+- **Firmware SD2SNES no oficial:** se ha informado de congelaciones aleatorias en un clon que utilizaba el firmware `sd2snes+`. Este problema no se ha reportado con el firmware oficial.
 
 Estos problemas siguen bajo investigación. Esta versión mejora la compatibilidad y corrige varios problemas gráficos que llevaban tiempo presentes, aunque todavía quedan algunas imperfecciones.
 
 ## Historial de versiones
+
+- **v3.1** – Correcciones de la Contrarreloj. El menú CHANGE COURSE / RETRY queda alineado al retirarte durante la carrera. Tras cruzar la meta sin entrar en los récords, el kart se aleja con el tamaño correcto, igual que en el juego original. El kart del jugador se posiciona con la misma proyección que el fantasma y el resto de objetos, de modo que el fantasma ya no aparece más abajo que el kart. El mapa inferior ya no muestra líneas desplazadas tras la meta, tampoco después de RETRY. Añade X como segundo botón para cambiar de cámara, junto a Select; Y sigue siendo el freno. Incluye todas las mejoras de la v3.0.
 
 - **v3.0** – Actualización importante. Migra el hack de DSP-1 a SA-1, introduce un minimapa flotante durante las carreras y añade una perspectiva de cámara alternativa que puede seleccionarse durante la partida. Mejora los degradados del cielo y los gráficos de los fondos, incorpora nuevas optimizaciones de rendimiento, corrige diversos problemas gráficos y de jugabilidad y añade compatibilidad probada con FXPAK Pro y SD2SNES con firmware oficial.
 
