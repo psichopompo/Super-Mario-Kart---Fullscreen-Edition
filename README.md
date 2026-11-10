@@ -6,7 +6,7 @@
 
 [![Super Mario Kart – Fullscreen Edition v3.0](https://img.youtube.com/vi/BO4YEe-mxVU/hqdefault.jpg)](https://youtu.be/BO4YEe-mxVU)
 
-By **Psicopompo** · USA ROM · IPS and BPS · Current version: **v3.0**
+By **Psicopompo** · USA ROM · IPS and BPS · Current version: **v3.1**
 
 ---
 
@@ -54,14 +54,28 @@ Version 2.0 introduced a second camera option: the **wide-horizon camera**, enab
 
 Version 3.0 retains both camera options and introduces a new underlying architecture: **the DSP-1 has been replaced by the SA-1 enhancement chip**. The alternative camera can still be selected during a race.
 
+Version 3.1 adds a second button for the camera switch: **X**, in addition to Select. It is closer to the thumb than Select, so changing the view mid-race is faster. The Y button is still the brake.
+
 Both camera options retain fullscreen projection and the fixes developed in earlier versions. The second camera is not a separate game mode: it is an alternative view built on the same fullscreen foundation.
+
+## What's new in v3.1
+
+Version 3.1 fixes several issues from v3.0, mostly in Time Trial:
+
+* **Aligned RETRY menu.** The Time Trial CHANGE COURSE / RETRY menu now appears in its correct position when you retire during a race.
+* **Correct kart size after the finish line.** When you finish a lap without setting a record, the kart now drives away at the correct size, as in the original game. Previously it looked tiny because it kept parameters from the fullscreen perspective.
+* **Ghost aligned with the player.** In fullscreen, the Time Trial ghost no longer appears a few pixels lower than your kart. The player's kart is now positioned with the same projection as every other object and racer, with both cameras. Collisions are not affected: only the on-screen position changed, not the game logic.
+* **Lower map without displaced lines.** After crossing the finish line, the map on the lower screen no longer shows displaced lines, including after restarting with RETRY. Leftover data that could remain saved from earlier sessions is now cleared.
+* **Second camera button.** The camera can now be switched with **X** as well as with Select. The Y button is still the brake.
+
+Everything from v3.0 is kept.
 
 ## What's changed
 
 * **SA-1 migration.** The hack has been migrated from the original DSP-1 to the SA-1 enhancement chip. This is a major architectural change and the foundation of the new version.
 * **True fullscreen in 1P.** The race view uses the full 256×224 pixels.
 * **Floating minimap.** A new minimap displays the track layout during races, without giving up the fullscreen race view. It is displayed as an overlay rather than occupying a separate portion of the screen.
-* **Two camera views.** The wide-horizon camera and the alternative fullscreen camera can be switched during gameplay.
+* **Two camera views.** The wide-horizon camera and the alternative fullscreen camera can be switched during gameplay, with Select or X.
 * **Adapted scenery across all 20 tracks.** Skies are extended to prevent black bands and colour jumps. Newly visible areas are filled using the tone of the adjacent gradient band. Koopa Beach clouds appear at all three heights from the starting grid, and Ghost Valley pillars are clipped correctly.
 * **Improved backgrounds.** Sky gradients have been refined, alongside additional graphical corrections.
 * **New camera reference.** The kart, road, opponents, objects, shadows, and collision logic remain consistent with the new projection.
@@ -115,6 +129,8 @@ Performance was tested separately. In a cold-start Bowser Castle 1 Time Trial, w
 
 Version 3.0 takes the project further with the SA-1 migration, a new floating minimap, additional optimizations, and expanded compatibility testing on flashcarts.
 
+Version 3.1 is a refinement release. Its Time Trial fixes were checked against v3.0 and against the original USA game: the size of the kart after the finish line was compared step by step with the original ROM, and two-player mode, menus and the other modes were compared with v3.0.
+
 A fix wasn't considered finished just because it worked in a screenshot. It had to survive the rest of the test suite.
 
 ## Development
@@ -132,19 +148,19 @@ Input: a clean, headerless **Super Mario Kart (USA)** ROM.
 | ROM | Size | CRC32 |
 | --- | ---: | --- |
 | Original (USA, clean and headerless) | 524,288 bytes | `CD80DB86` |
-| Patched (v3.0) | 4,194,304 bytes | Not provided |
+| Patched (v3.1) | 4,194,304 bytes | `69E4539F` |
 
 The resulting ROM is **4 MB (4,194,304 bytes)**.
 
-Its corrected SNES header checksum is:
+Its SHA-1 is `8C1B8EF3904501C29CB3E631AA6C760416548433`, and its corrected SNES header checksum is:
 
-* Checksum: `AE16`
-* Checksum complement: `51E9`
+* Checksum: `643F`
+* Checksum complement: `9BC0`
 
 Two patches are included:
 
-* `SMK_Fullscreen_USA.bps` — **recommended**; verifies the input ROM before applying the patch.
-* `SMK_Fullscreen_USA.ips` — does not verify the input ROM.
+* `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).bps` — **recommended**; verifies the input ROM and the result when applying the patch.
+* `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).ips` — does not verify the input ROM.
 
 The IPS patch has been verified against the final patched ROM using a custom decoder, but has not been tested with third-party patching tools such as Flips or Lunar IPS.
 
@@ -178,11 +194,13 @@ The flashcart's red LED may remain on during gameplay. This behaviour has been o
 
 * **FXPAK Pro:** Two small white pixels may occasionally appear in the dark area on the left side of the screen in Ghost Valley.
 * **Background flicker:** Occasional flickering may occur during particularly demanding moments.
-* **Unofficial SD2SNES firmware:** One clone running `sd2SNES+` firmware was reported to experience random freezes. This issue has not been reported with official firmware.
+* **Unofficial SD2SNES firmware:** One clone running `sd2snes+` firmware was reported to experience random freezes. This issue has not been reported with official firmware.
 
 These issues are still being investigated. The release improves compatibility and corrects several long-standing graphical problems, but some imperfections remain.
 
 ## Version history
+
+* **v3.1** – Time Trial fixes. The CHANGE COURSE / RETRY menu is aligned when you retire during a race. After crossing the finish line without setting a record, the kart drives away at the correct size, as in the original game. The player's kart is positioned with the same projection as the ghost and the other objects, so the ghost no longer appears lower than the kart. The lower map no longer shows displaced lines after the finish line, including after RETRY. Adds X as a second button to switch cameras, alongside Select; Y remains the brake. Includes all v3.0 improvements.
 
 * **v3.0** – Major update. Migrates the hack from DSP-1 to SA-1, introduces a floating minimap during races, and adds an alternative camera perspective that can be switched during gameplay. Improves sky gradients and background graphics, introduces further performance optimizations, fixes various graphical and gameplay issues, and adds tested compatibility with FXPAK Pro and SD2SNES using official firmware.
 
