@@ -6,7 +6,7 @@
 
 [![Super Mario Kart – Fullscreen Edition v3.0](https://img.youtube.com/vi/BO4YEe-mxVU/hqdefault.jpg)](https://youtu.be/BO4YEe-mxVU)
 
-By **Psicopompo** · USA ROM · IPS and BPS · Current version: **v3.1**
+By **Psicopompo** · USA ROM · IPS and BPS · Current version: **v3.1.1**
 
 ---
 
@@ -56,7 +56,15 @@ Version 3.0 retains both camera options and introduces a new underlying architec
 
 Version 3.1 adds a second button for the camera switch: **X**, in addition to Select. It is closer to the thumb than Select, so changing the view mid-race is faster. The Y button is still the brake.
 
+Version 3.1.1 makes the Time Trial finish line behave the same with both cameras: the kart now drives away at the correct size with camera 2 as well.
+
 Both camera options retain fullscreen projection and the fixes developed in earlier versions. The second camera is not a separate game mode: it is an alternative view built on the same fullscreen foundation.
+
+## What's new in v3.1.1
+
+* **Kart size after the finish line with the second camera.** Version 3.1 fixed the size of the kart after finishing a lap without setting a record, but only with camera 1. With camera 2 the kart still looked small. The size is now correct with both cameras.
+
+Everything from v3.1 and v3.0 is kept.
 
 ## What's new in v3.1
 
@@ -129,7 +137,7 @@ Performance was tested separately. In a cold-start Bowser Castle 1 Time Trial, w
 
 Version 3.0 takes the project further with the SA-1 migration, a new floating minimap, additional optimizations, and expanded compatibility testing on flashcarts.
 
-Version 3.1 is a refinement release. Its Time Trial fixes were checked against v3.0 and against the original USA game: the size of the kart after the finish line was compared step by step with the original ROM, and two-player mode, menus and the other modes were compared with v3.0.
+Versions 3.1 and 3.1.1 are refinement releases. Their Time Trial fixes were checked against v3.0 and against the original USA game: the size of the kart after the finish line was compared step by step with the original ROM, with both cameras, and two-player mode, menus and the other modes were compared with v3.0.
 
 A fix wasn't considered finished just because it worked in a screenshot. It had to survive the rest of the test suite.
 
@@ -148,19 +156,19 @@ Input: a clean, headerless **Super Mario Kart (USA)** ROM.
 | ROM | Size | CRC32 |
 | --- | ---: | --- |
 | Original (USA, clean and headerless) | 524,288 bytes | `CD80DB86` |
-| Patched (v3.1) | 4,194,304 bytes | `69E4539F` |
+| Patched (v3.1.1) | 4,194,304 bytes | `EA313F1C` |
 
 The resulting ROM is **4 MB (4,194,304 bytes)**.
 
-Its SHA-1 is `8C1B8EF3904501C29CB3E631AA6C760416548433`, and its corrected SNES header checksum is:
+Its SHA-1 is `26A746D7177E948409576AA85BF716968F494F0E`, and its corrected SNES header checksum is:
 
-* Checksum: `643F`
-* Checksum complement: `9BC0`
+* Checksum: `64CB`
+* Checksum complement: `9B34`
 
 Two patches are included:
 
-* `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).bps` — **recommended**; verifies the input ROM and the result when applying the patch.
-* `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).ips` — does not verify the input ROM.
+* `Super Mario Kart - Fullscreen Edition (v3.1.1) (SA-1) (by Psicopompo).bps` — **recommended**; verifies the input ROM and the result when applying the patch.
+* `Super Mario Kart - Fullscreen Edition (v3.1.1) (SA-1) (by Psicopompo).ips` — does not verify the input ROM.
 
 The IPS patch has been verified against the final patched ROM using a custom decoder, but has not been tested with third-party patching tools such as Flips or Lunar IPS.
 
@@ -199,6 +207,8 @@ The flashcart's red LED may remain on during gameplay. This behaviour has been o
 These issues are still being investigated. The release improves compatibility and corrects several long-standing graphical problems, but some imperfections remain.
 
 ## Version history
+
+* **v3.1.1** – Fixes the kart size after the finish line in Time Trial when using the second camera, so it is now correct with both cameras. Includes all v3.1 improvements.
 
 * **v3.1** – Time Trial fixes. The CHANGE COURSE / RETRY menu is aligned when you retire during a race. After crossing the finish line without setting a record, the kart drives away at the correct size, as in the original game. The player's kart is positioned with the same projection as the ghost and the other objects, so the ghost no longer appears lower than the kart. The lower map no longer shows displaced lines after the finish line, including after RETRY. Adds X as a second button to switch cameras, alongside Select; Y remains the brake. Includes all v3.0 improvements.
 
