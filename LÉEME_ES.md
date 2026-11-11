@@ -6,7 +6,7 @@
 
 [![Super Mario Kart – Fullscreen Edition v3.0](https://img.youtube.com/vi/BO4YEe-mxVU/hqdefault.jpg)](https://youtu.be/BO4YEe-mxVU)
 
-Por **Psicopompo** · ROM USA · Parches IPS y BPS · Versión actual: **v3.1**
+Por **Psicopompo** · ROM USA · Parches IPS y BPS · Versión actual: **v3.1.1**
 
 ---
 
@@ -56,7 +56,15 @@ La versión 3.0 conserva ambas opciones de cámara e introduce una nueva arquite
 
 La versión 3.1 añade un segundo botón para cambiar de cámara: **X**, además de Select. Queda más cerca del pulgar que Select, así que cambiar de vista en plena carrera es más rápido. El botón Y sigue siendo el freno.
 
+La versión 3.1.1 hace que la línea de meta de la Contrarreloj se comporte igual con las dos cámaras: el kart se aleja también con el tamaño correcto con la cámara 2.
+
 Ambas perspectivas mantienen la proyección a pantalla completa y las correcciones desarrolladas en versiones anteriores. La segunda cámara no es un modo de juego independiente, sino una vista alternativa construida sobre la misma base de pantalla completa.
+
+## Novedades de la v3.1.1
+
+- **Tamaño del kart al cruzar la meta con la segunda cámara.** La versión 3.1 corrigió el tamaño del kart al terminar una vuelta sin entrar en los récords, pero solo con la cámara 1. Con la cámara 2 el kart seguía viéndose pequeño. Ahora el tamaño es correcto con las dos cámaras.
+
+Se mantiene todo lo de la v3.1 y la v3.0.
 
 ## Novedades de la v3.1
 
@@ -129,7 +137,7 @@ El rendimiento se comprobó por separado. En una prueba de Time Trial en Bowser 
 
 La versión 3.0 lleva el proyecto un paso más allá con la migración a SA-1, el nuevo minimapa flotante, optimizaciones adicionales y pruebas ampliadas de compatibilidad con flashcarts.
 
-La versión 3.1 es una versión de refinamiento. Sus correcciones de la Contrarreloj se comprobaron frente a la v3.0 y frente al juego USA original: el tamaño del kart tras la meta se comparó paso a paso con la ROM original, y el modo para dos jugadores, los menús y el resto de modos se compararon con la v3.0.
+Las versiones 3.1 y 3.1.1 son versiones de refinamiento. Sus correcciones de la Contrarreloj se comprobaron frente a la v3.0 y frente al juego USA original: el tamaño del kart tras la meta se comparó paso a paso con la ROM original, con las dos cámaras, y el modo para dos jugadores, los menús y el resto de modos se compararon con la v3.0.
 
 Una corrección no se consideraba terminada simplemente porque funcionase en una captura de pantalla. Tenía que superar el resto de las pruebas.
 
@@ -148,19 +156,19 @@ Se necesita una ROM limpia y sin cabecera de **Super Mario Kart (USA)**.
 | ROM | Tamaño | CRC32 |
 | --- | ---: | --- |
 | Original (USA, limpia y sin cabecera) | 524.288 bytes | `CD80DB86` |
-| Parcheada (v3.1) | 4.194.304 bytes | `69E4539F` |
+| Parcheada (v3.1.1) | 4.194.304 bytes | `EA313F1C` |
 
 La ROM resultante ocupa **4 MB (4.194.304 bytes)**.
 
-Su SHA-1 es `8C1B8EF3904501C29CB3E631AA6C760416548433` y su checksum corregido en la cabecera SNES es:
+Su SHA-1 es `26A746D7177E948409576AA85BF716968F494F0E` y su checksum corregido en la cabecera SNES es:
 
-- Checksum: `643F`
-- Complemento del checksum: `9BC0`
+- Checksum: `64CB`
+- Complemento del checksum: `9B34`
 
 Se incluyen dos parches:
 
-- `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).bps` — **recomendado**; verifica la ROM de entrada y el resultado al aplicar el parche.
-- `Super Mario Kart - Fullscreen Edition (v3.1) (SA-1) (by Psicopompo).ips` — no verifica la ROM de entrada.
+- `Super Mario Kart - Fullscreen Edition (v3.1.1) (SA-1) (by Psicopompo).bps` — **recomendado**; verifica la ROM de entrada y el resultado al aplicar el parche.
+- `Super Mario Kart - Fullscreen Edition (v3.1.1) (SA-1) (by Psicopompo).ips` — no verifica la ROM de entrada.
 
 El parche IPS se ha verificado contra la ROM final utilizando un decodificador propio, pero no se ha probado con herramientas de parcheo de terceros como Flips o Lunar IPS.
 
@@ -199,6 +207,8 @@ El LED rojo del flashcart puede permanecer encendido durante la partida. Este co
 Estos problemas siguen bajo investigación. Esta versión mejora la compatibilidad y corrige varios problemas gráficos que llevaban tiempo presentes, aunque todavía quedan algunas imperfecciones.
 
 ## Historial de versiones
+
+- **v3.1.1** – Corrige el tamaño del kart tras cruzar la meta en la Contrarreloj al usar la segunda cámara, que ahora es correcto con las dos cámaras. Incluye todas las mejoras de la v3.1.
 
 - **v3.1** – Correcciones de la Contrarreloj. El menú CHANGE COURSE / RETRY queda alineado al retirarte durante la carrera. Tras cruzar la meta sin entrar en los récords, el kart se aleja con el tamaño correcto, igual que en el juego original. El kart del jugador se posiciona con la misma proyección que el fantasma y el resto de objetos, de modo que el fantasma ya no aparece más abajo que el kart. El mapa inferior ya no muestra líneas desplazadas tras la meta, tampoco después de RETRY. Añade X como segundo botón para cambiar de cámara, junto a Select; Y sigue siendo el freno. Incluye todas las mejoras de la v3.0.
 
